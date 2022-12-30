@@ -4,6 +4,7 @@ A Logger with C++
 CMakeFile  
 
 add include_dirctions and lib to yourself project  
+Environment: Linux / Unix
 # Method  
 debug()  
 info()  
