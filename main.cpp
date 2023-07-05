@@ -10,10 +10,10 @@ int main(){
 
     Log::Logger::getInstance()->open("../today.log");
     Log::Logger::getInstance()->setLevel(Log::Logger::INFO);
-    debug("Hello");
-    info("info message");
-    warn("warn message");
-    error("error message");
-    fatal("fatal message");
+    DEBUG("Hello");
+    INFO("info message");
+    WARN("warn message");
+    ERROR("error message");
+    FATAL("fatal message");
     return 0;
 }
