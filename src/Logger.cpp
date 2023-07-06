@@ -4,8 +4,16 @@
 #include <cstring>
 #include <ctime>
 #include <stdexcept>
+
+#ifdef _WIN32
+#include <sys/utime.h>
+#include <time.h>
+#endif
+
+#ifdef __APPLE__
 #include <sys/_types/_time_t.h>
 #include <xlocale/_time.h>
+#endif
 
 const char* Log::Logger::level[LEVEL_COUNT] = {
     "DEBUG","INFO","WARN","ERROR","FATAL"
