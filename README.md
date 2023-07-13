@@ -19,3 +19,11 @@ include ./include direction
 link lib/${plant_lib}/Logger.*
 
 set first logFilename just like main.cpp
+  
+# CMake && Make
+Windows：
+  CMake .. - G "Visual Studio 16 2019"  
+  Generate .sln file under build  
+Linux/MacOS:
+  CMake ..  
+  make  
