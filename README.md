@@ -24,6 +24,7 @@ set first logFilename just like main.cpp
 Windows：
   CMake .. - G "Visual Studio 16 2019"  
   Generate .sln file under build  
+    
 Linux/MacOS:
   CMake ..  
   make  
