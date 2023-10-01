@@ -8,7 +8,7 @@ Logger Test Demo
 */
 int main(){
 
-    Log::Logger::getInstance()->open("../today.log");
+    Log::Logger::getInstance()->open("today");
     Log::Logger::getInstance()->setLevel(Log::Logger::INFO);
     DEBUG("Hello");
     INFO("info message");

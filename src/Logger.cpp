@@ -2,7 +2,9 @@
 #include <cstdarg>
 #include <cstdio>
 #include <cstring>
+#include <fstream>
 #include <ctime>
+#include <ostream>
 #include <stdexcept>
 
 #ifdef _WIN32
@@ -28,7 +30,7 @@ Log::Logger* Log::Logger::getInstance(){
 
 void Log::Logger::log(Level level, const char* file, int line, const char* format, ...){
     if(m_level > level) return;
-    if(m_os.fail()) throw std::runtime_error("open file failed");
+    if(m_os.fail()) std::runtime_error("open file failed");
     time_t tick = time(NULL);
     struct tm* ptm = localtime(&tick);
     char timestamp[32];
@@ -69,22 +71,32 @@ void Log::Logger::backup(){
     struct tm* ptm = localtime(&ticks);
     char timestamp[32];
     memset(timestamp, 0, sizeof(timestamp));
-    strftime(timestamp, sizeof(timestamp), ".%Y-%m-%d_%H-%M-%S", ptm);
+    strftime(timestamp, sizeof(timestamp), "-%Y-%m-%d_%H-%M-%S", ptm);
     std::string tmp = timestamp;
     std::string tfn = m_filename;
-    std::string filename = "../" + tfn + tmp;
-    if (rename(m_filename, filename.c_str()) != 0) throw std::runtime_error("rename log file failed: "); 
-    open(m_filename); 
+
+    std::string filename = tfn + tmp;
+    std::string file = filename + ".log";
+
+    if (rename(m_file.c_str(), file.c_str())) {
+        std::cout << "error" << std::endl;
+        std::runtime_error("rename log file failed: ");
+    } 
+    open(tfn, std::ios::ate); 
 }
 
 void Log::Logger::setLevel(Log::Logger::Level level){
     this->m_level = level;
 }
 
-void Log::Logger::open(const std::string filename){
-    this->m_filename = filename.c_str();
-    m_os.open(m_filename, std::ios::app);
-    if(!m_os.is_open()) throw std::runtime_error("open " + filename + " failed...");
+void Log::Logger::open(const std::string filename, std::ios::open_mode is_type){
+
+    std::string file = filename + ".log";
+    m_file = file.c_str();
+    m_filename = filename.c_str();
+
+    m_os.open(m_file, is_type);
+    if(!m_os.is_open()) std::runtime_error("open " + file + " failed...");
     m_os.seekp(0, std::ios::end);
     len = m_os.tellp();
 }
@@ -94,7 +106,11 @@ void Log::Logger::close(){
 }
 
 Log::Logger::Logger(): max(1024), min(0), len(0){
-
+#ifdef _BUILD
+    m_level = Log::Logger::Level::DEBUG;
+#else
+    m_level = Log::Logger::Level::INFO;
+#endif
 }
 
 Log::Logger::~Logger(){

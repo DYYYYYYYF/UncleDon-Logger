@@ -31,7 +31,7 @@ namespace Log{
             };
             void log(Level level, const char* file, int line, const char* format, ...);
             static Logger* getInstance();
-            void open(const std::string filename);
+            void open(const std::string filename, std::ios::open_mode = std::ios::app);
             void close();
             void setLevel(Level level);
 
@@ -43,7 +43,8 @@ namespace Log{
         private:
             static Logger* instance;
             std::ofstream m_os;
-            const char* m_filename;
+            std::string m_file;
+            std::string m_filename;
             static const char* level[LEVEL_COUNT];
             Level m_level;
             int min, max, len;
