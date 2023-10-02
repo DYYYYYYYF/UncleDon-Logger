@@ -89,7 +89,7 @@ void Log::Logger::setLevel(Log::Logger::Level level){
     this->m_level = level;
 }
 
-void Log::Logger::open(const std::string filename, std::ios::open_mode is_type){
+void Log::Logger::open(const std::string filename, std::ios::openmode is_type){
 
     std::string file = filename + ".log";
     m_file = file.c_str();

@@ -31,7 +31,7 @@ namespace Log{
             };
             void log(Level level, const char* file, int line, const char* format, ...);
             static Logger* getInstance();
-            void open(const std::string filename, std::ios::open_mode = std::ios::app);
+            void open(const std::string filename, std::ios::openmode = std::ios::app);
             void close();
             void setLevel(Level level);
 
