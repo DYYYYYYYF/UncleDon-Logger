@@ -29,11 +29,14 @@ namespace Log{
                 FATAL,
                 LEVEL_COUNT
             };
-            void log(Level level, const char* file, int line, const char* format, ...);
             static Logger* getInstance();
+
             void open(const std::string filename, std::ios::openmode = std::ios::app);
+            void log(Level level, const char* file, int line, const char* format, ...);
             void close();
+    
             void setLevel(Level level);
+            void setMaxSize(int max_size){ max = max_size; }
 
         private:
             Logger();
