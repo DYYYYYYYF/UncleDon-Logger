@@ -5,8 +5,13 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 if(${CMAKE_HOST_WIN32})
     message("Current environment: Win32\n")
-    set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib/Windows/debug)
-    set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib/Windows/release)
+    message("Current build type: ${CMAKE_BUILD_TYPE}\n")
+
+    if (${CMAKE_BUILD_TYPE} STREQUAL "Release")
+        set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib/Windows/release)
+    else()
+        set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib/Windows/debug)
+    endif()
 endif()
 
 if (${CMAKE_HOST_APPLE})
