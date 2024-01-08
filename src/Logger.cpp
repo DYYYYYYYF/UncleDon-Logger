@@ -1,21 +1,4 @@
 #include "Logger.hpp"
-#include <cstdarg>
-#include <cstdio>
-#include <cstring>
-#include <fstream>
-#include <ctime>
-#include <ostream>
-#include <stdexcept>
-
-#ifdef _WIN32
-#include <sys/utime.h>
-#include <time.h>
-#endif
-
-#ifdef __APPLE__
-#include <sys/_types/_time_t.h>
-#include <xlocale/_time.h>
-#endif
 
 const char* Log::Logger::level[LEVEL_COUNT] = {
     "DEBUG","INFO","WARN","ERROR","FATAL"
@@ -32,10 +15,11 @@ void Log::Logger::log(Level level, const char* file, int line, const char* forma
     if(m_level > level) return;
     if(m_os.fail()) std::runtime_error("open file failed");
     time_t tick = time(NULL);
-    struct tm* ptm = localtime(&tick);
+    struct tm ptm;
+    localtime_s(&ptm, &tick);
     char timestamp[32];
     memset(timestamp, 0, sizeof(timestamp));
-    strftime(timestamp, sizeof(timestamp), "%Y-%m-%d %H:%M:%S", ptm);
+    strftime(timestamp, sizeof(timestamp), "%Y-%m-%d %H:%M:%S", &ptm);
 
     const char* pformat = "%s %s %s:%d";
     int size = snprintf(NULL, 0, pformat, timestamp, Log::Logger::level[level], file, line);
@@ -68,10 +52,11 @@ void Log::Logger::log(Level level, const char* file, int line, const char* forma
 void Log::Logger::backup(){
     close();
     time_t ticks = time(NULL);
-    struct tm* ptm = localtime(&ticks);
+    struct tm ptm;
+    localtime_s(&ptm, &ticks);
     char timestamp[32];
     memset(timestamp, 0, sizeof(timestamp));
-    strftime(timestamp, sizeof(timestamp), "-%Y-%m-%d_%H-%M-%S", ptm);
+    strftime(timestamp, sizeof(timestamp), "-%Y-%m-%d_%H-%M-%S", &ptm);
     std::string tmp = timestamp;
     std::string tfn = m_filename;
 
@@ -98,7 +83,7 @@ void Log::Logger::open(const std::string filename, std::ios::openmode is_type){
     m_os.open(m_file, is_type);
     if(!m_os.is_open()) std::runtime_error("open " + file + " failed...");
     m_os.seekp(0, std::ios::end);
-    len = m_os.tellp();
+    len = (int)m_os.tellp();
 }
 
 void Log::Logger::close(){
