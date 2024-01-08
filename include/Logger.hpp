@@ -3,8 +3,18 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <time.h>
 #include <cstdarg>
+
+#ifdef _WIN32
+#define _CRT_SECURE_NO_WARNINGS
+#include <sys/utime.h>
+#include <time.h>
+#endif
+
+#ifdef __APPLE__
+#include <sys/_types/_time_t.h>
+#include <xlocale/_time.h>
+#endif
 
 namespace Log{
 
