@@ -23,5 +23,5 @@ endif()
 include_directories(./include)
 aux_source_directory(./src MY_SRC_DIRS)
 
-add_library(Logger ${MY_SRC_DIRS})
-# add_executable(Logger main.cpp ${MY_SRC_DIRS})
+# add_library(Logger ${MY_SRC_DIRS})
+add_executable(Logger main.cpp ${MY_SRC_DIRS})
