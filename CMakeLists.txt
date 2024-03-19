@@ -4,8 +4,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 if(${CMAKE_HOST_WIN32})
-    message("Current environment: Win32\n")
-    message("Current build type: ${CMAKE_BUILD_TYPE}\n")
+    message("UncleDone::Logger  Current environment: Win32")
 
     if (${CMAKE_BUILD_TYPE} STREQUAL "Release")
         set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib/Windows/release)
@@ -15,7 +14,7 @@ if(${CMAKE_HOST_WIN32})
 endif()
 
 if (${CMAKE_HOST_APPLE})
-    message("Current environment: Apple MacOS\n")
+    message("UncleDone::Logger  Current environment: Apple MacOS")
 
     if (${CMAKE_BUILD_TYPE} STREQUAL "Release")
         set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib/MacOS/release)
@@ -25,7 +24,7 @@ if (${CMAKE_HOST_APPLE})
     
 endif()
 
-message(${CMAKE_BUILD_TYPE})
+message("UncleDone::Logger  Current build type: ${CMAKE_BUILD_TYPE}\n")
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/src MY_SRC_DIRS)
