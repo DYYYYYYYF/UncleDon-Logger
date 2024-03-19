@@ -18,13 +18,23 @@ before use UncleDon-Logger
 include ./include direction
 link lib/${plant_lib}/Logger.*
 
-set first logFilename: Log::Logger::getInstance()->open("today") 
+set first logFilename: `Log::Logger::getInstance()->open("today") `
   
 # CMake && Make  
+Single build:
 Windows：  
+```shell
   CMake .. - G "Visual Studio 16 2019"  
   Generate .sln file under build  
+```
     
 Linux/MacOS:  
+```shell
   CMake ..  
   make  
+```
+
+Add to project:
+```cmake
+add_subdirectory(UncleDon-Logger)
+```
