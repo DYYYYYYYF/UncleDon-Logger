@@ -1,0 +1,4 @@
+2023-10-30 19:24:33 INFO /Users/uncled/Documents/CFiles/Logger/UncleDon-Logger/main.cpp:18	info message
+2023-10-30 19:24:33 WARN /Users/uncled/Documents/CFiles/Logger/UncleDon-Logger/main.cpp:22	warn message
+2023-10-30 19:24:33 ERROR /Users/uncled/Documents/CFiles/Logger/UncleDon-Logger/main.cpp:26	error message
+2023-10-30 19:24:33 FATAL /Users/uncled/Documents/CFiles/Logger/UncleDon-Logger/main.cpp:30	fatal message

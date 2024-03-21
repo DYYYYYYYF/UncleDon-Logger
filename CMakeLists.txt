@@ -3,6 +3,10 @@ cmake_minimum_required(VERSION 3.0.0)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+if(CMAKE_BUILD_TYPE STREQUAL "")
+  set(CMAKE_BUILD_TYPE Release)
+endif()
+
 if(${CMAKE_HOST_WIN32})
     message("UncleDone::Logger::Current environment: Win32")
 
@@ -17,7 +21,7 @@ if (${CMAKE_HOST_APPLE})
     message("UncleDone::Logger::Current environment: Apple MacOS")
 
     if (${CMAKE_BUILD_TYPE} STREQUAL "Release")
-        set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib/MacOS/release)
+        set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib/MacOS/${CMAKE_BUILD_TYPE})
     else()
         set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib/MacOS/${CMAKE_BUILD_TYPE})
     endif()
