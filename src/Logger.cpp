@@ -17,7 +17,7 @@ void Log::Logger::log(Level level, const char* file, int line, const char* forma
     time_t tick = time(NULL);
     struct tm ptm;
 #ifdef _WIN32
-    // localtime_s(&ptm, &tick);
+    localtime_s(&ptm, &tick);
 #elif __APPLE__
     localtime_r(&tick, &ptm);
 #endif
@@ -60,7 +60,7 @@ void Log::Logger::backup(){
     struct tm ptm;
 
 #ifdef _WIN32
-    // localtime_s(&ptm, &tick);
+    localtime_s(&ptm, &ticks);
 #elif __APPLE__
     localtime_r(&ticks, &ptm);
 #endif
