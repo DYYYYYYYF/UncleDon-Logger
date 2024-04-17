@@ -26,16 +26,33 @@ void Log::Logger::log(Level level, const char* file, int line, const char* forma
     memset(timestamp, 0, sizeof(timestamp));
     strftime(timestamp, sizeof(timestamp), "%Y-%m-%d %H:%M:%S", &ptm);
 
-    const char* pformat = "%s %s %s:%d";
-    int size = snprintf(NULL, 0, pformat, timestamp, Log::Logger::level[level], file, line);
-    if(size > 0){
-        len += size + 1;
-        char* buf = new char[size + 1];
-        snprintf(buf, size + 1, pformat, timestamp, Log::Logger::level[level], file ,line);
-        buf[size] = '\0';
-        m_os << buf;
-        delete[] buf;
+    int size = 0;
+    if (m_mode & Log::Logger::LogMode::eMode_Complex) {
+		const char* pformat = "%s %s %s:%d";
+		size = snprintf(NULL, 0, pformat, timestamp, Log::Logger::level[level], file, line);
+		if (size > 0) {
+			len += size + 1;
+			char* buf = new char[size + 1];
+			snprintf(buf, size + 1, pformat, timestamp, Log::Logger::level[level], file, line);
+			buf[size] = '\0';
+			m_os << buf;
+			delete[] buf;
+		}
     }
+    else if (m_mode & Log::Logger::LogMode::eMode_Simple) {
+		const char* pformat = "[%s]:";
+		size = snprintf(NULL, 0, pformat, Log::Logger::level[level]);
+		if (size > 0) {
+			len += size + 1;
+			char* buf = new char[size + 1];
+            snprintf(buf, size + 1, pformat, Log::Logger::level[level]);
+			buf[size] = '\0';
+			m_os << buf;
+			delete[] buf;
+		}
+    }
+
+
 
     va_list valist;
     va_start(valist, format);
@@ -107,6 +124,8 @@ Log::Logger::Logger(): max(1024), min(0), len(0){
 #else
     m_level = Log::Logger::Level::INFO;
 #endif
+
+    m_mode = Log::Logger::LogMode::eMode_Simple;
 }
 
 Log::Logger::~Logger(){
