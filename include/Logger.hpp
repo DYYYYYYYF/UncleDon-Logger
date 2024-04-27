@@ -57,6 +57,12 @@ namespace Log{
                 FATAL,
                 LEVEL_COUNT
             };
+
+            enum LogMode {
+                eMode_Complex,
+                eMode_Simple
+            };
+
             static Logger* getInstance();
 
             void open(const std::string filename, std::ios::openmode = std::ios::app);
@@ -65,6 +71,8 @@ namespace Log{
     
             void setLevel(Level level);
             void setMaxSize(int max_size){ max = max_size; }
+
+            void SetMode(LogMode mode) { m_mode = mode; }
 
         private:
             Logger();
@@ -78,6 +86,7 @@ namespace Log{
             std::string m_filename;
             static const char* level[LEVEL_COUNT];
             Level m_level;
+            LogMode m_mode;
             int min, max, len;
 
     };
