@@ -119,13 +119,16 @@ void Log::Logger::close(){
 }
 
 Log::Logger::Logger(): max(1024), min(0), len(0){
-#ifdef _BUILD
+#ifdef _DEBUG
     m_level = Log::Logger::Level::DEBUG;
+    m_mode = Log::Logger::LogMode::eMode_Simple;
+
 #else
     m_level = Log::Logger::Level::INFO;
+    m_mode = Log::Logger::LogMode::eMode_Complex;
+
 #endif
 
-    m_mode = Log::Logger::LogMode::eMode_Simple;
 }
 
 Log::Logger::~Logger(){

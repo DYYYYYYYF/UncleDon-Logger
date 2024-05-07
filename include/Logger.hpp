@@ -55,8 +55,9 @@ namespace Log{
             };
 
             enum LogMode {
-                eMode_Complex,
-                eMode_Simple
+                eMode_Only_Message = 0x00,
+                eMode_Complex = 0x01,
+                eMode_Simple = 0x02
             };
 
             static Logger* getInstance();
