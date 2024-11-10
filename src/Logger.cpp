@@ -1,4 +1,4 @@
-#include "Logger.hpp"
+﻿#include "Logger.hpp"
 
 const char* Log::Logger::level[LEVEL_COUNT] = {
     "DEBUG","INFO","WARN","ERROR","FATAL"
