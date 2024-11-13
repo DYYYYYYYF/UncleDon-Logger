@@ -18,7 +18,7 @@ message("UncleDone::Logger  Current build type: ${CMAKE_BUILD_TYPE}\n")
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/src MY_SRC_DIRS)
 
-add_library(Logger ${MY_SRC_DIRS})
+add_library(Logger STATIC ${MY_SRC_DIRS})
 #add_executable(Logger main.cpp ${MY_SRC_DIRS})
 
 target_include_directories(Logger PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
