@@ -4,6 +4,7 @@
 #include <fstream>
 #include <string>
 #include <cstdarg>
+#include <sstream>
 
 #ifdef _WIN32
 
@@ -43,6 +44,26 @@
 #endif 
 
 namespace Log{
+
+#ifndef LOG_DEBUG
+#define LOG_DEBUG  Log::Logger::getInstance()->log(Log::Logger::DEBUG, __FILE__, __LINE__)
+#endif
+
+#ifndef LOG_WARN
+#define LOG_WARN  Log::Logger::getInstance()->log(Log::Logger::WARN, __FILE__, __LINE__)
+#endif
+
+#ifndef LOG_ERROR
+#define LOG_ERROR  Log::Logger::getInstance()->log(Log::Logger::ERROR, __FILE__, __LINE__)
+#endif
+
+#ifndef LOG_FATAL
+#define LOG_FATAL  Log::Logger::getInstance()->log(Log::Logger::FATAL, __FILE__, __LINE__)
+#endif
+
+#ifndef LOG_INFO
+#define LOG_INFO  Log::Logger::getInstance()->log(Log::Logger::INFO, __FILE__, __LINE__)
+#endif
 
 #ifndef UL_DEBUG
 #define UL_DEBUG(format, ...) \
@@ -86,10 +107,41 @@ namespace Log{
                 eMode_Simple = 0x02
             };
 
+	    public:
+		    // 流式日志接口
+		    class LogStream {
+			public:
+				LogStream(Logger* logger, Level level, const char* file, int line)
+					: logger_(logger), level_(level), file_(file), line_(line) {}
+
+				~LogStream() {
+					logger_->log(level_, file_, line_, stream_.str());
+				}
+
+				template<typename T>
+				LogStream& operator<<(const T& msg) {
+					stream_ << msg;
+					return *this;
+				}
+
+			private:
+				Logger* logger_;
+				Level level_;
+				const char* file_;
+				int line_;
+				std::ostringstream stream_;
+		    };
+
+		    // 流式日志宏的辅助函数
+		    LogStream log(Level level, const char* file, int line) {
+			    return LogStream(this, level, file, line);
+		    }   
+
             EXPORT_UL_DLL static Logger* getInstance();
 
 			EXPORT_UL_DLL void open(const std::string filename, std::ios::openmode = std::ios::app);
 			EXPORT_UL_DLL void log(Level level, const char* file, int line, const char* format, ...);
+			EXPORT_UL_DLL void log(Level level, const char* file, int line, const std::string& msg);
 			EXPORT_UL_DLL void close();
 
 			EXPORT_UL_DLL void setLevel(Level level);
