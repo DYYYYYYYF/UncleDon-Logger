@@ -3,8 +3,21 @@ project(UL_Logger)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+if(BUILD_SHARED_LIB)
+    unset(BUILD_SHARED_LIB CACHE)
+endif()
+
+if(BUILD_STATIC_LIB)
+    unset(BUILD_STATIC_LIB CACHE)
+endif()
+
+if(BUILD_EXAMPLE_EXE)
+    unset(BUILD_EXAMPLE_EXE CACHE)
+endif()
+
 option(BUILD_SHARED_LIB "Build shared lib" OFF)
 option(BUILD_STATIC_LIB "Build shared lib" ON)
+option(BUILD_EXAMPLE_EXE "Build example project" ON)
 
 if(${CMAKE_HOST_WIN32})
     message("UncleDon::Logger  Current environment: Win32")
@@ -24,4 +37,7 @@ add_compile_definitions(UL_Logger_SHARED PUBLIC -DBUILD_STATIC_LIB)
 endif()
 
 add_subdirectory(ULogger)
-add_subdirectory(Example)
+
+if(BUILD_EXAMPLE_EXE)
+    add_subdirectory(Example)
+endif()
