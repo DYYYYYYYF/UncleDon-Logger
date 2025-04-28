@@ -17,11 +17,11 @@ UL_FATAL()
 
 #### 流式输出（支持自动推到类型）：LOG_INFO << "number: " << 5
 
-LOG_DEBUG
-LOG_INFO
-LOG_WARN
-LOG_ERROR
-LOG_FATAL
+LOG_DEBUG  
+LOG_INFO  
+LOG_WARN  
+LOG_ERROR  
+LOG_FATAL  
 
 # Some Suggestions
 before use UncleDon-Logger  
