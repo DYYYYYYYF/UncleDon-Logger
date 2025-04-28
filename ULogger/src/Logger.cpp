@@ -71,10 +71,6 @@ void Log::Logger::log(Level level, const char* file, int line, const char* forma
     if(max > 0 && len > max) backup();
 }
 
-void Log::Logger::log(Level level, const char* file, int line, const std::string& msg){
-    log(level, file, line, msg.c_str());
-}
-
 void Log::Logger::backup(){
     close();
     time_t ticks = time(NULL);
