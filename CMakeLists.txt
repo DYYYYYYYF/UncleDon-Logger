@@ -1,24 +1,27 @@
-﻿cmake_minimum_required(VERSION 3.0...3.5)
-project(Logger)
+﻿cmake_minimum_required(VERSION 3.10)
+project(UL_Logger)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+option(BUILD_SHARED_LIB "Build shared lib" OFF)
+option(BUILD_STATIC_LIB "Build shared lib" ON)
+
 if(${CMAKE_HOST_WIN32})
-    message("UncleDone::Logger  Current environment: Win32")
-    set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib/Windows/${CMAKE_BUILD_TYPE})
+    message("UncleDon::Logger  Current environment: Win32")
+    message("UncleDon::Logger  Current build type: ${CMAKE_BUILD_TYPE}")
+    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY  ${PROJECT_SOURCE_DIR}/lib/Windows/${CMAKE_BUILD_TYPE})
+elseif (${CMAKE_HOST_APPLE})
+    message("UncleDon::Logger  Current environment: Apple MacOS")
+    message("UncleDon::Logger  Current build type: ${CMAKE_BUILD_TYPE}")
+    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY  ${PROJECT_SOURCE_DIR}/lib/Windows/${CMAKE_BUILD_TYPE})
 endif()
 
-if (${CMAKE_HOST_APPLE})
-    message("UncleDone::Logger  Current environment: Apple MacOS")
-    set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib/MacOS/${CMAKE_BUILD_TYPE})
+if(BUILD_SHARED_LIB)
+add_compile_definitions(UL_Logger_SHARED PUBLIC -DDEXPORT) 
+add_compile_definitions(UL_Logger_SHARED PUBLIC -DBUILD_SHARED_LIB) 
+elseif(BUILD_STATIC_LIB)
+add_compile_definitions(UL_Logger_SHARED PUBLIC -DBUILD_STATIC_LIB) 
 endif()
 
-message("UncleDone::Logger  Current build type: ${CMAKE_BUILD_TYPE}\n")
-
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
-aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/src MY_SRC_DIRS)
-
-add_library(Logger STATIC ${MY_SRC_DIRS})
-#add_executable(Logger main.cpp ${MY_SRC_DIRS})
-
-target_include_directories(Logger PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+add_subdirectory(ULogger)
+add_subdirectory(Example)
