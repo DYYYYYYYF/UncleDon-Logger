@@ -25,7 +25,8 @@ void Log::Logger::log(Level level, const char* file, int line, const char* forma
     char timestamp[32];
     memset(timestamp, 0, sizeof(timestamp));
     strftime(timestamp, sizeof(timestamp), "%Y-%m-%d %H:%M:%S", &ptm);
-
+	
+    log_mutex.lock();
     int size = 0;
     if (m_mode & Log::Logger::LogMode::eMode_Complex) {
 		const char* pformat = "%s %s %s:%d";
@@ -68,6 +69,8 @@ void Log::Logger::log(Level level, const char* file, int line, const char* forma
         delete[] content;
     }
     m_os.flush();
+	log_mutex.unlock();
+
     if(max > 0 && len > max) backup();
 }
 

@@ -5,6 +5,7 @@
 #include <string>
 #include <cstdarg>
 #include <sstream>
+#include <mutex>
 
 #ifdef _WIN32
 
@@ -156,6 +157,7 @@ namespace Log{
 
         private:
             static Logger* instance;
+            std::mutex log_mutex;
             std::ofstream m_os;
             std::string m_file;
             std::string m_filename;
