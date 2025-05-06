@@ -30,7 +30,7 @@ elseif (${CMAKE_HOST_APPLE})
 endif()
 
 if(BUILD_SHARED_LIB)
-add_compile_definitions(UL_Logger PUBLIC -DBUILD_SHARED_LIB) 
+add_compile_definitions(UL_Logger_SHARED PUBLIC -DBUILD_SHARED_LIB) 
 elseif(BUILD_STATIC_LIB)
 add_compile_definitions(UL_Logger PUBLIC -DBUILD_STATIC_LIB) 
 endif()

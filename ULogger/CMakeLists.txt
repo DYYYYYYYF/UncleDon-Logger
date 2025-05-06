@@ -9,7 +9,7 @@ add_library(UL_LOGGER_OBJECT OBJECT ${MY_SRC_DIRS})
 if(BUILD_SHARED_LIB)
     message("UncleDon::Logger Build dynamic lib")
     add_compile_definitions(UL_Logger_SHARED PUBLIC -DDEXPORT) 
-    target_include_directories(UL_Logger PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+    target_include_directories(UL_Logger_SHARED PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
     set_target_properties(UL_Logger PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}
         LIBRARY_OUTPUT_DIRECTORY ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}
