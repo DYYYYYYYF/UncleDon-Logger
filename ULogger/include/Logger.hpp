@@ -39,7 +39,7 @@
 #endif
 #endif	// #ifdef DEXPORT
 
-#elif BUILD_STATIC_LIB
+#else
 #define EXPORT_UL_DLL
 #endif 
 

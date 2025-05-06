@@ -5,16 +5,6 @@ aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/src MY_SRC_DIRS)
 # 先编译为 OBJECT 库（不生成最终库文件）
 add_library(UL_LOGGER_OBJECT OBJECT ${MY_SRC_DIRS})
 
-# 从 OBJECT 库生成静态库
-if(BUILD_STATIC_LIB)
-    message("UncleDon::Logger Build static lib")
-    add_library(UL_Logger STATIC $<TARGET_OBJECTS:UL_LOGGER_OBJECT>)
-    target_include_directories(UL_Logger PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
-    set_target_properties(UL_Logger PROPERTIES
-        ARCHIVE_OUTPUT_DIRECTORY  ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}
-    )
-endif()
-
 # 从 OBJECT 库生成动态库
 if(BUILD_SHARED_LIB)
     message("UncleDon::Logger Build dynamic lib")
@@ -32,6 +22,16 @@ if(BUILD_SHARED_LIB)
             ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}
         COMMENT "Copying dll"
     )
+    
+# 从 OBJECT 库生成静态库
+else()
+    message("UncleDon::Logger Build static lib")
+    add_library(UL_Logger STATIC $<TARGET_OBJECTS:UL_LOGGER_OBJECT>)
+    target_include_directories(UL_Logger PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+    set_target_properties(UL_Logger PROPERTIES
+        ARCHIVE_OUTPUT_DIRECTORY  ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}
+    )
+
 endif()
 
 
