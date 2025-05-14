@@ -155,7 +155,14 @@ Log::Logger::~Logger(){
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__)
 void Log::Logger::PrintTerminalMsg(Level level, const char* msg) {
 	HANDLE ConsoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-	static unsigned char levels[6] = { 64, 4, 6, 2, 1, 8 };
+	/*
+    *   低四位：Text   高四位：Background
+        0 = 黑色    8 = 灰色    1 = 淡蓝      9 = 蓝色
+		2 = 淡绿    A = 绿色    3 = 湖蓝      B = 淡浅绿
+		C = 红色    4 = 淡红    5 = 紫色      D = 淡紫
+		6 = 黄色    E = 淡黄    7 = 白色      F = 亮白
+    */
+    static unsigned char levels[6] = {0x02, 0x08, 0x06, 0x04, 0x0C, 1}; // Debug Info Warn Error Fatal
 	SetConsoleTextAttribute(ConsoleHandle, levels[level]);
 	OutputDebugStringA(msg);
 	unsigned long long Length = strlen(msg);
