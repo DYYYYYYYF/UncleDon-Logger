@@ -1,5 +1,9 @@
 ﻿#include "Logger.hpp"
 
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__)
+#include <windows.h>
+#endif
+
 const char* Log::Logger::level[LEVEL_COUNT] = {
     "DEBUG","INFO","WARN","ERROR","FATAL"
 };
@@ -32,7 +36,7 @@ void Log::Logger::log(Level level, const char* file, int line, const char* forma
 		const char* pformat = "%s %s %s:%d";
 		size = snprintf(NULL, 0, pformat, timestamp, Log::Logger::level[level], file, line);
 		if (size > 0) {
-			len += size + 1;
+			context_len += size + 1;
 			char* buf = new char[size + 1];
 			snprintf(buf, size + 1, pformat, timestamp, Log::Logger::level[level], file, line);
 			buf[size] = '\0';
@@ -44,7 +48,7 @@ void Log::Logger::log(Level level, const char* file, int line, const char* forma
 		const char* pformat = "[%s]:";
 		size = snprintf(NULL, 0, pformat, Log::Logger::level[level]);
 		if (size > 0) {
-			len += size + 1;
+			context_len += size + 1;
 			char* buf = new char[size + 1];
             snprintf(buf, size + 1, pformat, Log::Logger::level[level]);
 			buf[size] = '\0';
@@ -60,18 +64,24 @@ void Log::Logger::log(Level level, const char* file, int line, const char* forma
     size = vsnprintf(NULL, 0, format, valist);
     va_end(valist);
     if(size > 0){
-        len += size + 1;
+        context_len += size + 1;
         char* content = new char[size + 1];
         va_start(valist, format);
         vsnprintf(content, size + 1, format, valist);
         va_end(valist);
-        m_os << "\t" << content << "\n";
+
+        std::string out_msg = std::string(content) + "\n";
+        // log file need a tab gap
+        m_os << "\t" << out_msg;
+
+        // print to terminal
+        PrintTerminalMsg(level, out_msg.c_str());
         delete[] content;
     }
     m_os.flush();
 	log_mutex.unlock();
 
-    if(max > 0 && len > max) backup();
+    if(content_max > 0 && context_len > content_max) backup();
 }
 
 void Log::Logger::log(Level level, const char* file, int line, const std::string& msg){
@@ -118,14 +128,14 @@ void Log::Logger::open(const std::string filename, std::ios::openmode is_type){
     m_os.open(m_file, is_type);
     if(!m_os.is_open()) std::runtime_error("open " + file + " failed...");
     m_os.seekp(0, std::ios::end);
-    len = (int)m_os.tellp();
+    context_len = (int)m_os.tellp();
 }
 
 void Log::Logger::close(){
     m_os.close();
 }
 
-Log::Logger::Logger(): max(1024), min(0), len(0){
+Log::Logger::Logger(): content_max(1024), content_min(0), context_len(0){
 #ifdef _DEBUG
     m_level = Log::Logger::Level::DEBUG;
     m_mode = Log::Logger::LogMode::eMode_Simple;
@@ -141,3 +151,22 @@ Log::Logger::Logger(): max(1024), min(0), len(0){
 Log::Logger::~Logger(){
     close();
 }
+
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__)
+void Log::Logger::PrintTerminalMsg(Level level, const char* msg) {
+	HANDLE ConsoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+	static unsigned char levels[6] = { 64, 4, 6, 2, 1, 8 };
+	SetConsoleTextAttribute(ConsoleHandle, levels[level]);
+	OutputDebugStringA(msg);
+	unsigned long long Length = strlen(msg);
+	LPDWORD NumberWritten = 0;
+	WriteConsoleA(GetStdHandle(STD_OUTPUT_HANDLE), msg, (DWORD)Length, NumberWritten, 0);
+	SetConsoleTextAttribute(ConsoleHandle, 8);
+}
+#elif defined(__APPLE__)
+void Log::Logger::PrintTerminalMsg(Level level, const char* msg) {
+	// FATAL,ERROR,WARN,INFO,DEBUG,TRACE
+	const char* colour_strings[] = { "0;41", "1;31", "1;33", "1;32", "1;34", "1;30" };
+	printf("\033[%sm%s\033[0m", colour_strings[color], message);
+}
+#endif

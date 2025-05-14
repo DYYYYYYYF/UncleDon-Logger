@@ -146,9 +146,11 @@ namespace Log{
 			EXPORT_UL_DLL void close();
 
 			EXPORT_UL_DLL void setLevel(Level level);
-			EXPORT_UL_DLL void setMaxSize(int max_size) { max = max_size; }
+			EXPORT_UL_DLL void setMaxSize(int max_size) { content_max = max_size; }
 
             EXPORT_UL_DLL void SetMode(LogMode mode) { m_mode = mode; }
+
+            EXPORT_UL_DLL void PrintTerminalMsg(Level level, const char* msg);
 
         private:
             Logger();
@@ -164,7 +166,7 @@ namespace Log{
             static const char* level[LEVEL_COUNT];
             Level m_level;
             LogMode m_mode;
-            int min, max, len;
+            int content_min, content_max, context_len;
 
     };
 } 
