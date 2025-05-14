@@ -137,11 +137,11 @@ void Log::Logger::close(){
 
 Log::Logger::Logger(): content_max(1024), content_min(0), context_len(0){
 #ifdef _DEBUG
-    m_level = Log::Logger::Level::DEBUG;
+    m_level = Log::Logger::Level::eDEBUG;
     m_mode = Log::Logger::LogMode::eMode_Simple;
 
 #else
-    m_level = Log::Logger::Level::INFO;
+    m_level = Log::Logger::Level::eINFO;
     m_mode = Log::Logger::LogMode::eMode_Complex;
 
 #endif

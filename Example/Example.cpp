@@ -8,7 +8,7 @@ Logger Test Demo
 int main(){
     // 基础信息配置
     Log::Logger::getInstance()->open("log");                                // 设置日志输出文件名称
-    Log::Logger::getInstance()->setLevel(Log::Logger::INFO);                // 设置日志等级
+    Log::Logger::getInstance()->setLevel(Log::Logger::eDEBUG);                // 设置日志等级
 	Log::Logger::getInstance()->setMaxSize(1024 * 1024);                           // 设置单文件最大存储量
     Log::Logger::getInstance()->SetMode(Log::Logger::eMode_Complex);        // 设置日志输出模式
 

@@ -47,58 +47,58 @@
 namespace Log{
 
 #ifndef LOG_DEBUG
-#define LOG_DEBUG  Log::Logger::getInstance()->log(Log::Logger::DEBUG, __FILE__, __LINE__)
+#define LOG_DEBUG  Log::Logger::getInstance()->log(Log::Logger::eDEBUG, __FILE__, __LINE__)
 #endif
 
 #ifndef LOG_WARN
-#define LOG_WARN  Log::Logger::getInstance()->log(Log::Logger::WARN, __FILE__, __LINE__)
+#define LOG_WARN  Log::Logger::getInstance()->log(Log::Logger::eWARN, __FILE__, __LINE__)
 #endif
 
 #ifndef LOG_ERROR
-#define LOG_ERROR  Log::Logger::getInstance()->log(Log::Logger::ERROR, __FILE__, __LINE__)
+#define LOG_ERROR  Log::Logger::getInstance()->log(Log::Logger::eERROR, __FILE__, __LINE__)
 #endif
 
 #ifndef LOG_FATAL
-#define LOG_FATAL  Log::Logger::getInstance()->log(Log::Logger::FATAL, __FILE__, __LINE__)
+#define LOG_FATAL  Log::Logger::getInstance()->log(Log::Logger::eFATAL, __FILE__, __LINE__)
 #endif
 
 #ifndef LOG_INFO
-#define LOG_INFO  Log::Logger::getInstance()->log(Log::Logger::INFO, __FILE__, __LINE__)
+#define LOG_INFO  Log::Logger::getInstance()->log(Log::Logger::eINFO, __FILE__, __LINE__)
 #endif
 
 #ifndef UL_DEBUG
 #define UL_DEBUG(format, ...) \
-    Log::Logger::getInstance()->log(Log::Logger::DEBUG, __FILE__, __LINE__, format, ##__VA_ARGS__)
+    Log::Logger::getInstance()->log(Log::Logger::eDEBUG, __FILE__, __LINE__, format, ##__VA_ARGS__)
 #endif  //UL_DEBUG
 
 #ifndef UL_WARN
 #define UL_WARN(format, ...) \
-    Log::Logger::getInstance()->log(Log::Logger::WARN, __FILE__, __LINE__, format, ##__VA_ARGS__)
+    Log::Logger::getInstance()->log(Log::Logger::eWARN, __FILE__, __LINE__, format, ##__VA_ARGS__)
 #endif
 
 #ifndef UL_ERROR
 #define UL_ERROR(format, ...) \
-    Log::Logger::getInstance()->log(Log::Logger::ERROR, __FILE__, __LINE__, format, ##__VA_ARGS__)
+    Log::Logger::getInstance()->log(Log::Logger::eERROR, __FILE__, __LINE__, format, ##__VA_ARGS__)
 #endif
 
 #ifndef UL_FATAL
 #define UL_FATAL(format, ...) \
-    Log::Logger::getInstance()->log(Log::Logger::FATAL, __FILE__, __LINE__, format, ##__VA_ARGS__)
+    Log::Logger::getInstance()->log(Log::Logger::eFATAL, __FILE__, __LINE__, format, ##__VA_ARGS__)
 #endif
 
 #ifndef UL_INFO
 #define UL_INFO(format, ...) \
-    Log::Logger::getInstance()->log(Log::Logger::INFO, __FILE__, __LINE__, format, ##__VA_ARGS__)
+    Log::Logger::getInstance()->log(Log::Logger::eINFO, __FILE__, __LINE__, format, ##__VA_ARGS__)
 #endif
 
     class Logger{
         public:
             enum Level{
-                DEBUG = 0,
-                INFO,
-                WARN,
-                ERROR,
-                FATAL,
+				eDEBUG = 0,
+				eINFO,
+				eWARN,
+				eERROR,
+				eFATAL,
                 LEVEL_COUNT
             };
 
