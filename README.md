@@ -34,6 +34,7 @@ set first logFilename: `Log::Logger::getInstance()->open("today") `
 # CMake && Make  
 Single build:
 Windows：  
+
 ```shell
   CMake .. - G "Visual Studio 16 2019"  
   Generate .sln file under build  
@@ -45,7 +46,13 @@ Linux/MacOS:
   make  
 ```
 
-Add to project:
+# 使用方式
+
+#### CMake工程：
+
 ```cmake
 add_subdirectory(UncleDon-Logger)
+target_link_libraries(${your_target} UL::Logger)        # 使用默认库（静态或动态）
+target_link_libraries(${your_target} UL::Logger_STATIC) # 明确使用静态库
+target_link_libraries(${your_target} UL::Logger_SHARED) # 明确使用动态库
 ```
