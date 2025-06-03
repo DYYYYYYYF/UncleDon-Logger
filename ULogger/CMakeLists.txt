@@ -52,10 +52,3 @@ if(WIN32 AND BUILD_SHARED_LIB)
 endif()
 
 message("UncleDon::Logger Libraries output directory: ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
-
-# 如果这是子项目，导出目标供父项目使用
-if(NOT CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
-    # 将目标设为全局，这样父项目就能找到
-    set_target_properties(UL_Logger_SHARED PROPERTIES IMPORTED_GLOBAL TRUE)
-    set_target_properties(UL_Logger_STATIC PROPERTIES IMPORTED_GLOBAL TRUE)
-endif()
