@@ -174,6 +174,6 @@ void Log::Logger::PrintTerminalMsg(Level level, const char* msg) {
 void Log::Logger::PrintTerminalMsg(Level level, const char* msg) {
 	// FATAL,ERROR,WARN,INFO,DEBUG,TRACE
 	const char* colour_strings[] = { "0;41", "1;31", "1;33", "1;32", "1;34", "1;30" };
-	printf("\033[%sm%s\033[0m", colour_strings[color], message);
+	printf("\033[%sm%s\033[0m", colour_strings[level], msg);
 }
 #endif

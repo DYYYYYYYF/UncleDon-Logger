@@ -3,5 +3,6 @@
 /out
 .vs
 .DStore
+.DS_Store
 /lib
 /Bin
