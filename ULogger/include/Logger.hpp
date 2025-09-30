@@ -163,7 +163,7 @@ namespace Log{
             std::ofstream m_os;
             std::string m_file;
             std::string m_filename;
-            static const char* level[LEVEL_COUNT];
+            static const char* level_string[LEVEL_COUNT];
             Level m_level;
             LogMode m_mode;
             int content_min, content_max, context_len;

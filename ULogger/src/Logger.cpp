@@ -4,7 +4,7 @@
 #include <windows.h>
 #endif
 
-const char* Log::Logger::level[LEVEL_COUNT] = {
+const char* Log::Logger::level_string[LEVEL_COUNT] = {
     "DEBUG","INFO","WARN","ERROR","FATAL"
 };
 
@@ -34,11 +34,11 @@ void Log::Logger::log(Level level, const char* file, int line, const char* forma
     int size = 0;
     if (m_mode & Log::Logger::LogMode::eMode_Complex) {
 		const char* pformat = "%s %s %s:%d";
-		size = snprintf(NULL, 0, pformat, timestamp, Log::Logger::level[level], file, line);
+		size = snprintf(NULL, 0, pformat, timestamp, Log::Logger::level_string[level], file, line);
 		if (size > 0) {
 			context_len += size + 1;
 			char* buf = new char[size + 1];
-			snprintf(buf, size + 1, pformat, timestamp, Log::Logger::level[level], file, line);
+			snprintf(buf, size + 1, pformat, timestamp, Log::Logger::level_string[level], file, line);
 			buf[size] = '\0';
 			m_os << buf;
 			delete[] buf;
@@ -46,11 +46,11 @@ void Log::Logger::log(Level level, const char* file, int line, const char* forma
     }
     else if (m_mode & Log::Logger::LogMode::eMode_Simple) {
 		const char* pformat = "[%s]:";
-		size = snprintf(NULL, 0, pformat, Log::Logger::level[level]);
+		size = snprintf(NULL, 0, pformat, Log::Logger::level_string[level]);
 		if (size > 0) {
 			context_len += size + 1;
 			char* buf = new char[size + 1];
-            snprintf(buf, size + 1, pformat, Log::Logger::level[level]);
+            snprintf(buf, size + 1, pformat, Log::Logger::level_string[level]);
 			buf[size] = '\0';
 			m_os << buf;
 			delete[] buf;
