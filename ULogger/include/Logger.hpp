@@ -22,8 +22,8 @@
 #include <xlocale/_time.h>
 #endif
 
-#ifdef BUILD_SHARED_LIB
-#ifdef DEXPORT
+#ifdef UNCLED_LOGGER_BUILD_SHARED_LIB
+#ifdef UNCLED_LOGGER_EXPORT
 // Export
 #ifdef _MSC_VER
 #define EXPORT_UL_DLL __declspec(dllexport)
