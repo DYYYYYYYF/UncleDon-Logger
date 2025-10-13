@@ -7,21 +7,6 @@
 #include <sstream>
 #include <mutex>
 
-#ifdef _WIN32
-
-#ifndef _CRT_SECURE_NO_WARNINGS
-#define _CRT_SECURE_NO_WARNINGS
-#endif
-
-#include <sys/utime.h>
-#include <time.h>
-#endif
-
-#ifdef __APPLE__
-#include <sys/_types/_time_t.h>
-#include <xlocale/_time.h>
-#endif
-
 #ifdef UNCLED_LOGGER_BUILD_SHARED_LIB
 #ifdef UNCLED_LOGGER_EXPORT
 // Export
@@ -43,6 +28,21 @@
 #else
 #define EXPORT_UL_DLL
 #endif 
+
+#ifdef _WIN32
+
+#ifndef _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+
+#include <sys/utime.h>
+#include <time.h>
+#endif
+
+#ifdef __APPLE__
+#include <sys/_types/_time_t.h>
+#include <xlocale/_time.h>
+#endif
 
 namespace Log{
 

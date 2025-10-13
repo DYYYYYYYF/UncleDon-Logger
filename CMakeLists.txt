@@ -3,13 +3,6 @@ project(UL_Logger)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-if(UL_BUILD_EXAMPLE_EXE)
-    unset(UL_BUILD_EXAMPLE_EXE CACHE)
-endif()
-if(UL_BUILD_SHARED_LIB)
-    unset(UL_BUILD_SHARED_LIB CACHE)
-endif()
-
 option(UL_BUILD_EXAMPLE_EXE "Build example project" ON)
 option(UL_BUILD_SHARED_LIB "Build shared library instead of static" ON)
 
