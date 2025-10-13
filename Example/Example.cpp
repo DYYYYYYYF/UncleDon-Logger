@@ -27,6 +27,9 @@ int main(){
 	LOG_ERROR   << "stream log: " << "error";
     LOG_FATAL   << "stream log: " << "fatal";
 
+    // 标准库
+    LOG_INFO    << "I can support std::endl." << std::endl;
+
 #define CORE_LOG UL_FATAL
 	// 宏定义
 	CORE_LOG("Core log");

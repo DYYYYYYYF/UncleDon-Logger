@@ -125,6 +125,12 @@ namespace Log{
 					return *this;
 				}
 
+				//支持流操纵符（如 std::endl, std::flush 等）
+				LogStream& operator<<(std::ostream& (*manip)(std::ostream&)) {
+					stream_ << manip;
+					return *this;
+				}
+
 			private:
 				Logger* logger_;
 				Level level_;
